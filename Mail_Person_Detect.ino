@@ -1,0 +1,258 @@
+#include <ESP8266WiFi.h>
+#include <ESP_Mail_Client.h>
+
+
+
+/* SMTP HoST */
+#define SMTP_HOST "smtp.gmail.com"
+#define SMTP_PORT esp_mail_smtp_port_587
+/* The log in credentials */
+#define AUTHOR_EMAIL "esp.snahal@gmail.com"
+#define AUTHOR_PASSWORD "vtfuukhtfbjsykxx"
+
+bool isPermanentConnection = 0;
+/* Recipient email address */
+// #define RECIPIENT_EMAIL "snahal135@gmail.com"
+
+/* Declare the global used SMTPSession object for SMTP transport */
+SMTPSession smtp;
+/* Callback function to get the Email sending status */
+void smtpCallback(SMTP_Status status);
+
+int family[3] = { 0, 0, 0 };
+// {0-SNAHAL, 1-PAPA, 2-MOMA}
+
+void setup() {
+  Serial.flush();
+  Serial.begin(115200);
+  Serial.flush();
+  delay(1000);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    // Read the incoming data
+    String command = Serial.readStringUntil('\n');  // Read until newline character
+
+    // Check if the received command is "start"
+    if (command == "start") {
+
+      Serial.println("Starting execution...");
+      snahal();
+      papa();
+      moma();
+
+      String textMsg = "<p>Your Family Members Needs Your Attention They Are Injured</p><ul>";
+      
+      if (family[0]) {
+        Serial.println("HELLO SNAHAL");
+        textMsg += "<li><b>Name:</b>SNAHAL KUMAR</li>";
+        textMsg += "<li><b>Age:</b>21</li>";
+        textMsg += "<li><b>Gender:</b>Male</li>";
+        textMsg += "<li><b>Contact Number:</b>7984202797</li>";
+        textMsg += "<li><b>Medical History ID: </b>2133</li>";
+        textMsg += "</ul>";
+      }
+      if (family[1]){
+        Serial.println("HELLO PAPA");
+        textMsg += "<ul>";
+        textMsg += "<li><b>Name:</b>PRABHAT KUMAR</li>";
+        textMsg += "<li><b>Age:</b>45</li>";
+        textMsg += "<li><b>Gender:</b>Male</li>";
+        textMsg += "<li><b>Contact Number:</b>9871984322</li>";
+        textMsg += "<li><b>Medical History ID: </b>2134</li>";
+        textMsg += "</ul>";
+      } 
+      if (family[2]){
+        Serial.println("HELLO MOMA");
+        textMsg += "<ul>";
+        textMsg += "<li><b>Name:</b>ARCHANA DEVI</li>";
+        textMsg += "<li><b>Age:</b>40</li>";
+        textMsg += "<li><b>Gender:</b>Female</li>";
+        textMsg += "<li><b>Contact Number:</b>9173932572</li>";
+        textMsg += "<li><b>Medical History ID: </b>2135</li>";
+        textMsg += "</ul>";
+      } 
+      
+      String emergencyURL = "https://google.com/";
+      textMsg += "<p>Check Medical History: <a href=\"" + emergencyURL + "\">" + emergencyURL + "</a></p>";
+      isPermanentConnection = 1;
+
+      for (int i = 0; i < 3; i++) {
+        if (family[i] == 1) {
+          if (i == 0) snahal();
+          else if (i == 1) papa();
+          else moma();
+          break;
+        }
+      }
+
+      MailClient.networkReconnect(true);
+
+      /** Enable the debug via Serial port
+          * 0 for no debugging
+          * 1 for basic level debugging
+          *
+          * Debug port can be changed via ESP_MAIL_DEFAULT_DEBUG_PORT in ESP_Mail_FS.h
+          */
+      smtp.debug(1);
+
+      /* Set the callback function to get the sending results */
+      smtp.callback(smtpCallback);
+
+      /* Declare the Session_Config for user defined session credentials */
+      Session_Config config;
+
+      /* Set the session config */
+      config.server.host_name = SMTP_HOST;
+      config.server.port = SMTP_PORT;
+      config.login.email = AUTHOR_EMAIL;
+      config.login.password = AUTHOR_PASSWORD;
+      config.login.user_domain = F("127.0.0.1");
+
+      /* Set the NTP config time */
+      config.time.ntp_server = F("pool.ntp.org,time.nist.gov");
+      config.time.gmt_offset = 3;
+      config.time.day_light_offset = 0;
+
+      /* The full message sending logs can now save to file */
+      /* Since v3.0.4, the sent logs stored in smtp.sendingResult will store only the latest message logs */
+      // config.sentLogs.filename = "/path/to/log/file";
+      // config.sentLogs.storage_type = esp_mail_file_storage_type_flash;
+
+      /* Declare the message class */
+      SMTP_Message message;
+
+      /* ###############################################################################################################           Set the message contents */
+      message.sender.name = F("NEED ATTENTION");
+      message.sender.email = AUTHOR_EMAIL;
+
+      message.subject = F("YOUR FAMILY NEEDS URGENT AMBULANCE");
+
+      String RECIPIENT_EMAIL = "somyamgr28@gmail.com";
+      if (!family[0]) message.addRecipient(F("Snahal Kumar"), "snahal135@gmail.com");
+      else if (!family[1]) message.addRecipient(F("Prabhat Kumar"), "pk529852@gmail.com");
+      else if (!family[2]) message.addRecipient(F("Archana Devi"), "20bec081@smvdu.ac.in");
+      else message.addRecipient(F("Somya Sinha"), "somyamgr28@gmail.com");
+
+      // message.addRecipient(F("Snahal Kumar"), RECIPIENT_EMAIL);
+
+      // String textMsg = "<p>This is the <span style=\"color:#ff0000;\">html text</span> message.</p><p>The message was sent via ESP device.</p>";
+      
+      // // Print the message to the Serial Monitor (for testing)
+      // Serial.println(textMsg);
+      message.html.content = textMsg;
+      message.html.charSet = F("us-ascii");
+
+      message.html.transfer_encoding = Content_Transfer_Encoding::enc_7bit;
+      message.priority = esp_mail_smtp_priority::esp_mail_smtp_priority_low;
+
+      message.addHeader(F("Message-ID: snahal135@gmail.com"));
+      // ############################################################################################################################################################
+
+      /* Connect to the server */
+      if (!smtp.connect(&config)) {
+        MailClient.printf("Connection error, Status Code: %d, Error Code: %d, Reason: %s\n", smtp.statusCode(), smtp.errorCode(), smtp.errorReason().c_str());
+        return;
+      }
+      if (!smtp.isLoggedIn()) {
+        Serial.println("Not yet logged in.");
+      } else {
+        if (smtp.isAuthenticated())
+          Serial.println("Successfully logged in.");
+        else
+          Serial.println("Connected with no Auth.");
+      }
+
+      /* Start sending Email and close the session */
+      if (!MailClient.sendMail(&smtp, &message))
+        MailClient.printf("Error, Status Code: %d, Error Code: %d, Reason: %s\n", smtp.statusCode(), smtp.errorCode(), smtp.errorReason().c_str());
+
+      // to clear sending result log
+      // smtp.sendingResult.clear();
+    } else {
+      // Handle unknown commands or do nothing
+      Serial.println("Unknown command: " + command);
+    }
+  }
+}
+
+// ############################# EDIT HERE FOR PASSWORD AND SSID OF FAMILY MEMBER ##########################
+void snahal() {
+  if (connectWiFi("SMVDU.", "123456789", "SNAHAL")) family[0] = 1;
+}
+
+void papa() {
+  if (connectWiFi("SNAHAL", "123456789", "PAPA")) family[1] = 1;
+}
+
+void moma() {
+  if (connectWiFi("MOMA", "123456789", "MOMA")) family[2] = 1;
+}
+// ########################################################################################################
+
+// ############################ DO NOT TOUCH WIFI CHECKING ##################################################
+bool connectWiFi(String ssid, String password, String name) {
+  WiFi.begin(ssid, password);
+  Serial.printf("Connecting to %s ...\n", name);
+  int count = 10;
+
+  while (WiFi.status() != WL_CONNECTED && count--) {
+    delay(1000);
+    Serial.print(".");
+  }
+  bool isConnected = WiFi.status() == WL_CONNECTED;
+
+  if (isConnected) {
+    Serial.printf("Connected to %s\n", name);
+    delay(1000);
+    if (isPermanentConnection == 0) {
+      WiFi.disconnect();
+      delay(1000);
+      Serial.println("Disconnected");
+    }
+    return 1;
+  } else Serial.printf("%s is not present \n", name);
+  return 0;
+}
+// ########################################################################################################
+
+// ########################################## EMAIL CONTENT ###############################################
+/* Callback function to get the Email sending status */
+void smtpCallback(SMTP_Status status) {
+  /* Print the current status */
+  Serial.println(status.info());
+
+  /* Print the sending result */
+  if (status.success()) {
+    // MailClient.printf used in the examples is for format printing via debug Serial port
+    // that works for all supported Arduino platform SDKs e.g. SAMD, ESP32 and ESP8266.
+    // In ESP8266 and ESP32, you can use Serial.printf directly.
+
+    Serial.println("----------------");
+    MailClient.printf("Message sent success: %d\n", status.completedCount());
+    MailClient.printf("Message sent failed: %d\n", status.failedCount());
+    Serial.println("----------------\n");
+
+    for (size_t i = 0; i < smtp.sendingResult.size(); i++) {
+      /* Get the result item */
+      SMTP_Result result = smtp.sendingResult.getItem(i);
+
+      // In case, ESP32, ESP8266 and SAMD device, the timestamp get from result.timestamp should be valid if
+      // your device time was synched with NTP server.
+      // Other devices may show invalid timestamp as the device time was not set i.e. it will show Jan 1, 1970.
+      // You can call smtp.setSystemTime(xxx) to set device time manually. Where xxx is timestamp (seconds since Jan 1, 1970)
+
+      MailClient.printf("Message No: %d\n", i + 1);
+      MailClient.printf("Status: %s\n", result.completed ? "success" : "failed");
+      MailClient.printf("Date/Time: %s\n", MailClient.Time.getDateTimeString(result.timestamp, "%B %d, %Y %H:%M:%S").c_str());
+      MailClient.printf("Recipient: %s\n", result.recipients.c_str());
+      MailClient.printf("Subject: %s\n", result.subject.c_str());
+    }
+    Serial.println("----------------\n");
+
+    // You need to clear sending result as the memory usage will grow up.
+    smtp.sendingResult.clear();
+  }
+}
+// #########################################################################################################
