@@ -6,7 +6,7 @@ function doGet(e) {
   if (!e.parameter.value) {
     result = 'No Parameter named "value"';
   } else {
-    var sheet_id = '1Ha6ap3USqMDXS67iOrA7RBHCeQkxMkzW3ywBVGEC0F0'; // Spreadsheet ID
+    var sheet_id = 'Your ID'; // Spreadsheet ID
     var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet(); // get Active sheet
     var newRow = sheet.getLastRow() + 1;
     var d = new Date();
@@ -39,7 +39,7 @@ function doGet(e) {
     var encodedHospitalNames = encodeURIComponent(hospitalNames);
 
     // Make an HTTPS request to Spreadsheet 1
-    var spreadsheet1URL = 'https://script.google.com/macros/s/AKfycbwaYGkJE0O72P0cg2snxOVV1gHpTio0xFbkoKKMlBM6ABoA8vHDPJ38WA8d2GzduOtphg/exec?values=' + encodedHospitalNames;
+    var spreadsheet1URL = 'https://script.google.com/macros/s/script id/exec?values=' + encodedHospitalNames;
     var response1 = UrlFetchApp.fetch(spreadsheet1URL);
     var responseText = response1.getContentText();
 
@@ -96,7 +96,7 @@ function stripQuotes(value) {
 
 function findNearbyHospitals(coordinates) {
   // Your Google Places API request
-  var apiKey = 'AIzaSyBgAC1y6dEPcJkNZJSjy_0Ec2KHEAC9NCs';
+  var apiKey = 'google api';
   var radius = 5000; // Define your preferred search radius in meters
   var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + coordinates + '&radius=' + radius + '&type=hospital&keyword=emergency&key=' + apiKey;
 
