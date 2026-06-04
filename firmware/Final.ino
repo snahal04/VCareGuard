@@ -21,8 +21,8 @@
 #define SMTP_HOST "smtp.gmail.com"
 #define SMTP_PORT esp_mail_smtp_port_587
 /* The log in credentials */
-#define AUTHOR_EMAIL "esp.snahal@gmail.com"
-#define AUTHOR_PASSWORD "vtfuukhtfbjsykxx"
+#define AUTHOR_EMAIL "REPLACE_WITH_YOUR_GMAIL_ADDRESS"
+#define AUTHOR_PASSWORD "REPLACE_WITH_YOUR_GMAIL_APP_PASSWORD"
 
 // Root certificate for valid till 2028S
 const char IRG_Root_X1[] PROGMEM = R"EOF(
@@ -61,19 +61,19 @@ String mapCoordinates = "";
 String hospitalNames[3] = { "00", "00", "00" };
 
 int family[3] = { 0, 0, 0 };
-// {0-SNAHAL, 1-Sagar, 2-Somya}
+// {0-SNAHAL, 1-REPLACE_WITH_FAMILY_WIFI_SSID_2, 2-Somya}
 
 // ############################# EDIT HERE FOR PASSWORD AND SSID OF FAMILY MEMBER ##########################
 void member1() {
-  if (connectWiFi("SMVDU.", "123456789", "SNAHAL")) family[0] = 1;
+  if (connectWiFi("REPLACE_WITH_YOUR_WIFI_SSID", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "SNAHAL")) family[0] = 1;
 }
 
 void member2() {
-  if (connectWiFi("Sagar", "123456789", "Sagar")) family[1] = 1;
+  if (connectWiFi("REPLACE_WITH_FAMILY_WIFI_SSID_2", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "REPLACE_WITH_FAMILY_WIFI_SSID_2")) family[1] = 1;
 }
 
 void member3() {
-  if (connectWiFi("Redmi", "123456789", "Somya")) family[2] = 1;
+  if (connectWiFi("REPLACE_WITH_FAMILY_WIFI_SSID_3", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "Somya")) family[2] = 1;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -197,9 +197,9 @@ void processFamilyMembers() {
     textMsg += "</ul>";
   }
   if (family[1]) {
-    Serial.println("HELLO Sagar");
+    Serial.println("HELLO REPLACE_WITH_FAMILY_WIFI_SSID_2");
     textMsg += "<ul>";
-    textMsg += "<li><b>Name:</b>Sagar Jha</li>";
+    textMsg += "<li><b>Name:</b>REPLACE_WITH_FAMILY_WIFI_SSID_2 Jha</li>";
     textMsg += "<li><b>Age:</b>21</li>";
     textMsg += "<li><b>Gender:</b>Male</li>";
     textMsg += "<li><b>Contact Number:</b>9871984322</li>";
@@ -227,7 +227,7 @@ void processFamilyMembers() {
 
 //################################################################  GET LOCATION /////////////////////////////////////////
 void getCurrentLocation() {
-  const char* googleApiKey = "AIzaSyBgAC1y6dEPcJkNZJSjy_0Ec2KHEAC9NCs";  // Google API key
+  const char* googleApiKey = "REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY";  // Google API key
   WifiLocation location(googleApiKey);
 
   for (uint8_t stopCheckCount = 3; stopCheckCount > 0; stopCheckCount--) {
@@ -267,7 +267,7 @@ void sendtoSpreadSheet() {
   Serial.println("Reconnecting the Internet");
   networkReferesh();
   const unsigned int httpsPort = 443;
-  String GAS_ID = "AKfycbz3uwSmHFNBrUyE0Xo9rJPGIKfERlqiqSKAOEmHdTsQD1ohtL1a0WKNjjjxB9hCBwbh";  // Spreadsheet script ID
+  String GAS_ID = "REPLACE_WITH_YOUR_GAS_SCRIPT_ID";  // Spreadsheet script ID
 
   const char* host = "script.google.com";
   WiFiClientSecure client;  // Create a WiFiClientSecure object
@@ -298,7 +298,7 @@ void sendtoSpreadSheet() {
 void findNearByHospital() {
 
   X509List cert(IRG_Root_X1);
-  const char* googleApiKey = "AIzaSyBgAC1y6dEPcJkNZJSjy_0Ec2KHEAC9NCs";
+  const char* googleApiKey = "REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY";
   Serial.println("Reconnecting the Internet");
   networkReferesh();
   setClock();
@@ -375,7 +375,7 @@ void searchInSheets() {
   const char* delimiter = ",";  // Choose a suitable delimiter
   String combinedHospitalNames = hospitalNames[0] + delimiter + hospitalNames[1] + delimiter + hospitalNames[2];
 
-  String GOOGLE_SCRIPT_ID = "AKfycbwaYGkJE0O72P0cg2snxOVV1gHpTio0xFbkoKKMlBM6ABoA8vHDPJ38WA8d2GzduOtphg";  //--> spreadsheet script ID
+  String GOOGLE_SCRIPT_ID = "REPLACE_WITH_YOUR_GAS_SCRIPT_ID";  //--> spreadsheet script ID
   networkReferesh();
   WiFiClientSecure client;
   HTTPClient https;
@@ -507,7 +507,7 @@ void sendMailtoMember() {
 
     // String RECIPIENT_EMAIL = "20bec081@smvdu.ac.in";
     if (!family[0]) message.addRecipient(F("Snahal Kumar"), "snahal135@gmail.com");
-    else if (!family[1]) message.addRecipient(F("Sagar Chandra Jha"), "pk529852@gmail.com");
+    else if (!family[1]) message.addRecipient(F("REPLACE_WITH_FAMILY_WIFI_SSID_2 Chandra Jha"), "pk529852@gmail.com");
     else if (!family[2]) message.addRecipient(F("Somya Sinha"), "20bec082@smvdu.ac.in");
     else message.addRecipient(F("Somya Sinha"), "somyamgr28@gmail.com");
 

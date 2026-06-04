@@ -5,8 +5,8 @@
 #include <ESP8266HTTPClient.h>
 #define SMTP_HOST "smtp.gmail.com"
 #define SMTP_PORT esp_mail_smtp_port_587
-#define AUTHOR_EMAIL "esp.snahal@gmail.com"
-#define AUTHOR_PASSWORD "vtfuukhtfbjsykxx"
+#define AUTHOR_EMAIL "REPLACE_WITH_YOUR_GMAIL_ADDRESS"
+#define AUTHOR_PASSWORD "REPLACE_WITH_YOUR_GMAIL_APP_PASSWORD"
 
 SMTPSession smtp;
 WiFiClientSecure client;
@@ -20,19 +20,19 @@ String textMsg = "<p>An Accident Needs Your Attention They Are Injured</p><ul>";
 String mapCoordinates = "";
 
 int family[3] = { 0, 0, 0 };
-// {0-SNAHAL, 1-Sagar, 2-Somya}
+// {0-SNAHAL, 1-REPLACE_WITH_FAMILY_WIFI_SSID_2, 2-Somya}
 
 // ############################# EDIT HERE FOR PASSWORD AND SSID OF FAMILY MEMBER ##########################
 void member1() {
-  if (connectWiFi("noway", "123456789", "SNAHAL")) family[0] = 1;
+  if (connectWiFi("REPLACE_WITH_FAMILY_WIFI_SSID_1", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "SNAHAL")) family[0] = 1;
 }
 
 void member2() {
-  if (connectWiFi("Sagar", "123456789", "Sagar")) family[1] = 1;
+  if (connectWiFi("REPLACE_WITH_FAMILY_WIFI_SSID_2", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "REPLACE_WITH_FAMILY_WIFI_SSID_2")) family[1] = 1;
 }
 
 void member3() {
-  if (connectWiFi("Redmi", "123456789", "Somya")) family[2] = 1;
+  if (connectWiFi("REPLACE_WITH_FAMILY_WIFI_SSID_3", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "Somya")) family[2] = 1;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -149,9 +149,9 @@ void processFamilyMembers() {
     textMsg += "</ul>";
   }
   if (family[1]) {
-    Serial.println("HELLO Sagar");
+    Serial.println("HELLO REPLACE_WITH_FAMILY_WIFI_SSID_2");
     textMsg += "<ul>";
-    textMsg += "<li><b>Name: </b>Sagar Jha</li>";
+    textMsg += "<li><b>Name: </b>REPLACE_WITH_FAMILY_WIFI_SSID_2 Jha</li>";
     textMsg += "<li><b>Age: </b>21</li>";
     textMsg += "<li><b>Gender: </b>Male</li>";
     textMsg += "<li><b>Contact Number: </b>9871984322</li>";
@@ -175,7 +175,7 @@ void processFamilyMembers() {
 
 //################################################################  GET LOCATION /////////////////////////////////////////
 void getCurrentLocation() {
-  const char* googleApiKey = "AIzaSyBgAC1y6dEPcJkNZJSjy_0Ec2KHEAC9NCs";  // Google API key
+  const char* googleApiKey = "REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY";  // Google API key
   WifiLocation location(googleApiKey);
 
   for (uint8_t stopCheckCount = 3; stopCheckCount > 0; stopCheckCount--) {
@@ -209,7 +209,7 @@ void getCurrentLocation() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void sendtoSpreadSheet() {
-  String GOOGLE_SCRIPT_ID = "AKfycbywRorkO0VtGBZ-b94wPWXT6Hm4wo1hQL8rX6azT1006V3Ctt34EbXywxVxDViw-y8Z";  // to get Contact
+  String GOOGLE_SCRIPT_ID = "REPLACE_WITH_YOUR_GAS_SCRIPT_ID";  // to get Contact
 
   // Serial.println("Reconnecting the Internet");
   networkReferesh();
@@ -319,7 +319,7 @@ void sendMailtoMember() {
 
     // String RECIPIENT_EMAIL = "20bec081@smvdu.ac.in";
     message.addRecipient(F("Snahal Kumar"), "snahal135@gmail.com");
-    message.addRecipient(F("Sagar Chandra Jha"), "pk529852@gmail.com");
+    message.addRecipient(F("REPLACE_WITH_FAMILY_WIFI_SSID_2 Chandra Jha"), "pk529852@gmail.com");
     message.addRecipient(F("Somya Sinha"), "20bec082@smvdu.ac.in");
     //  message.addRecipient(F("Somya Sinha"), "somyamgr28@gmail.com");
 

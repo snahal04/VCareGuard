@@ -7,11 +7,11 @@
 //----------------------------------------
 
 //----------------------------------------SSID and Password of your WiFi router.
-const char* ssid = "SMVDU.";         //--> Your wifi name or SSID.
-const char* password = "123456789";  //--> Your wifi password.
+const char* ssid = "REPLACE_WITH_YOUR_WIFI_SSID";         //--> Your wifi name or SSID.
+const char* password = "REPLACE_WITH_YOUR_WIFI_PASSWORD";  //--> Your wifi password.
 //----------------------------------------
 
-String GOOGLE_SCRIPT_ID = "AKfycbwaYGkJE0O72P0cg2snxOVV1gHpTio0xFbkoKKMlBM6ABoA8vHDPJ38WA8d2GzduOtphg";  //--> spreadsheet script ID
+String GOOGLE_SCRIPT_ID = "REPLACE_WITH_YOUR_GAS_SCRIPT_ID";  //--> spreadsheet script ID
 String hospitalNames[3] = { "Shri%20Mata%20Vaishno%20Devi%20Narayana%20Superspeciality%20Hospital" };
 const char* delimiter = ",";  // Choose a suitable delimiter
 String combinedHospitalNames = hospitalNames[0] + delimiter + hospitalNames[1] + delimiter + hospitalNames[2];

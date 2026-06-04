@@ -4,11 +4,11 @@
 
 
 //----------------------------------------SSID and Password of your WiFi router.
-const char* ssid = "SMVDU.";         //--> Your wifi name or SSID.
-const char* password = "123456789";  //--> Your wifi password.
+const char* ssid = "REPLACE_WITH_YOUR_WIFI_SSID";         //--> Your wifi name or SSID.
+const char* password = "REPLACE_WITH_YOUR_WIFI_PASSWORD";  //--> Your wifi password.
 //----------------------------------------
 
-String GOOGLE_SCRIPT_ID = "AKfycbxXXz0YmHEd6W_7TpkaFpgdPyq5vLOp2DPDKEa0aYMDB6OFNTedqzFL-Cp2WU1ckGxS";  //--> spreadsheet script ID
+String GOOGLE_SCRIPT_ID = "REPLACE_WITH_YOUR_GAS_SCRIPT_ID";  //--> spreadsheet script ID
 
 void setup() {
 

@@ -32,8 +32,8 @@ HMUfpIBvFSDJ3gyICh3WZlXi/EjJKSZp4A==
 )EOF";
 
 // Replace with your network credentials
-const char* ssid = "SMVDU.";
-const char* password = "123456789";
+const char* ssid = "REPLACE_WITH_YOUR_WIFI_SSID";
+const char* password = "REPLACE_WITH_YOUR_WIFI_PASSWORD";
 
 // Create a list of certificates with the server certificate
 X509List cert(IRG_Root_X1);
@@ -82,7 +82,7 @@ void setup() {
     HTTPClient https;
     https.useHTTP10(true);
     Serial.print("[HTTPS] begin...\n");
-    if (https.begin(client, "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.9409866,74.9542694&radius=1000&type=hospital&key=AIzaSyBgAC1y6dEPcJkNZJSjy_0Ec2KHEAC9NCs")) {  // HTTPS
+    if (https.begin(client, "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.9409866,74.9542694&radius=1000&type=hospital&key=REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY")) {  // HTTPS
 
       Serial.print("[HTTPS] GET...\n");
       // start connection and send HTTP header

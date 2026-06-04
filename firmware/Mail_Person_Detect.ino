@@ -7,8 +7,8 @@
 #define SMTP_HOST "smtp.gmail.com"
 #define SMTP_PORT esp_mail_smtp_port_587
 /* The log in credentials */
-#define AUTHOR_EMAIL "esp.snahal@gmail.com"
-#define AUTHOR_PASSWORD "vtfuukhtfbjsykxx"
+#define AUTHOR_EMAIL "REPLACE_WITH_YOUR_GMAIL_ADDRESS"
+#define AUTHOR_PASSWORD "REPLACE_WITH_YOUR_GMAIL_APP_PASSWORD"
 
 bool isPermanentConnection = 0;
 /* Recipient email address */
@@ -179,15 +179,15 @@ void loop() {
 
 // ############################# EDIT HERE FOR PASSWORD AND SSID OF FAMILY MEMBER ##########################
 void snahal() {
-  if (connectWiFi("SMVDU.", "123456789", "SNAHAL")) family[0] = 1;
+  if (connectWiFi("REPLACE_WITH_YOUR_WIFI_SSID", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "SNAHAL")) family[0] = 1;
 }
 
 void papa() {
-  if (connectWiFi("SNAHAL", "123456789", "PAPA")) family[1] = 1;
+  if (connectWiFi("SNAHAL", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "PAPA")) family[1] = 1;
 }
 
 void moma() {
-  if (connectWiFi("MOMA", "123456789", "MOMA")) family[2] = 1;
+  if (connectWiFi("MOMA", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "MOMA")) family[2] = 1;
 }
 // ########################################################################################################
 

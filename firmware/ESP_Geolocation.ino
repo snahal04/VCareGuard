@@ -6,9 +6,9 @@
 // #if __has_include("wificonfig.h")
 // #include "wificonfig.h"
 // #else
-const char* googleApiKey = "AIzaSyBgAC1y6dEPcJkNZJSjy_0Ec2KHEAC9NCs";
-const char* ssid = "SMVDU.";
-const char* passwd = "123456789";
+const char* googleApiKey = "REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY";
+const char* ssid = "REPLACE_WITH_YOUR_WIFI_SSID";
+const char* passwd = "REPLACE_WITH_YOUR_WIFI_PASSWORD";
 // #endif
 
 WifiLocation location(googleApiKey);

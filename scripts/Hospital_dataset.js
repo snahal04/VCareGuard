@@ -7,7 +7,7 @@ function doGet(e) {
     result = 'No Parameter named "values"';
   } else {
     var searchValues = e.parameter.values.split(','); // Split the comma-separated values
-    var sheet_id = 'ADD_ID'; // Spreadsheet ID
+    var sheet_id = 'REPLACE_WITH_YOUR_SPREADSHEET_ID'; // Spreadsheet ID
     var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet(); // Get Active sheet
     var data = sheet.getDataRange().getValues();
     var results = searchValuesInSheet(data, searchValues);

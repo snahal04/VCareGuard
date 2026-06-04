@@ -7,8 +7,8 @@
 #define SMTP_HOST "smtp.gmail.com"
 #define SMTP_PORT esp_mail_smtp_port_587
 /* The log in credentials */
-#define AUTHOR_EMAIL "esp.snahal@gmail.com"
-#define AUTHOR_PASSWORD "vtfuukhtfbjsykxx"
+#define AUTHOR_EMAIL "REPLACE_WITH_YOUR_GMAIL_ADDRESS"
+#define AUTHOR_PASSWORD "REPLACE_WITH_YOUR_GMAIL_APP_PASSWORD"
 
 bool isPermanentConnection = 0;
 String textMsg = "<p>Your Family Members Needs Your Attention They Are Injured</p><ul>";
@@ -23,7 +23,7 @@ SMTPSession smtp;
 void smtpCallback(SMTP_Status status);
 
 int family[3] = { 0, 0, 0 };
-// {0-SNAHAL, 1-Sagar, 2-Somya}
+// {0-SNAHAL, 1-REPLACE_WITH_FAMILY_WIFI_SSID_2, 2-Somya}
 
 void setup() {
   Serial.flush();
@@ -87,9 +87,9 @@ void processFamilyMembers() {
     textMsg += "</ul>";
   }
   if (family[1]) {
-    Serial.println("HELLO Sagar");
+    Serial.println("HELLO REPLACE_WITH_FAMILY_WIFI_SSID_2");
     textMsg += "<ul>";
-    textMsg += "<li><b>Name:</b>Sagar Jha</li>";
+    textMsg += "<li><b>Name:</b>REPLACE_WITH_FAMILY_WIFI_SSID_2 Jha</li>";
     textMsg += "<li><b>Age:</b>21</li>";
     textMsg += "<li><b>Gender:</b>Male</li>";
     textMsg += "<li><b>Contact Number:</b>9871984322</li>";
@@ -118,7 +118,7 @@ void processFamilyMembers() {
 
 //################################################################  GET LOCATION /////////////////////////////////////////
 void getCurrentLocation() {
-  const char* googleApiKey = "AIzaSyBgAC1y6dEPcJkNZJSjy_0Ec2KHEAC9NCs";  // Google API
+  const char* googleApiKey = "REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY";  // Google API
   WifiLocation location(googleApiKey);
   // Set Clock and Track Location Time to execute 5-8 Seconds
   uint8_t stopCheckCount = 3;
@@ -217,7 +217,7 @@ void sendMailtoMember() {
 
     String RECIPIENT_EMAIL = "20bec081@smvdu.ac.in";
     if (!family[0]) message.addRecipient(F("Snahal Kumar"), "snahal135@gmail.com");
-    else if (!family[1]) message.addRecipient(F("Sagar Chandra Jha"), "pk529852@gmail.com");
+    else if (!family[1]) message.addRecipient(F("REPLACE_WITH_FAMILY_WIFI_SSID_2 Chandra Jha"), "pk529852@gmail.com");
     else if (!family[2]) message.addRecipient(F("Somya Sinha"), "20bec082@smvdu.ac.in");
     else message.addRecipient(F("Somya Sinha"), "somyamgr28@gmail.com");
 
@@ -276,15 +276,15 @@ void sendMailtoMember() {
 
 // ############################# EDIT HERE FOR PASSWORD AND SSID OF FAMILY MEMBER ##########################
 void snahal() {
-  if (connectWiFi("SMVDU.", "123456789", "SNAHAL")) family[0] = 1;
+  if (connectWiFi("REPLACE_WITH_YOUR_WIFI_SSID", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "SNAHAL")) family[0] = 1;
 }
 
 void papa() {
-  if (connectWiFi("Sagar", "123456789", "Sagar")) family[1] = 1;
+  if (connectWiFi("REPLACE_WITH_FAMILY_WIFI_SSID_2", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "REPLACE_WITH_FAMILY_WIFI_SSID_2")) family[1] = 1;
 }
 
 void moma() {
-  if (connectWiFi("Redmi", "123456789", "Somya")) family[2] = 1;
+  if (connectWiFi("REPLACE_WITH_FAMILY_WIFI_SSID_3", "REPLACE_WITH_YOUR_WIFI_PASSWORD", "Somya")) family[2] = 1;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -415,7 +415,7 @@ void sendtoSpreadSheet() {
     const char* host = "script.google.com";
     const unsigned int httpsPort = 443;
     WiFiClientSecure client;                                                                     //--> Create a WiFiClientSecure object.
-    String GAS_ID = "AKfycbz3uwSmHFNBrUyE0Xo9rJPGIKfERlqiqSKAOEmHdTsQD1ohtL1a0WKNjjjxB9hCBwbh";  //--> spreadsheet script ID
+    String GAS_ID = "REPLACE_WITH_YOUR_GAS_SCRIPT_ID";  //--> spreadsheet script ID
     client.setInsecure();
 
     Serial.println("======= Ready To Send Location in SpreadSheet ======");

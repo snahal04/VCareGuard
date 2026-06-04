@@ -1,5 +1,5 @@
 /*
-Email Id: esp.snahal@gmail.com
+Email Id: REPLACE_WITH_YOUR_GMAIL_ADDRESS
 App Password: vtfu ukht fbjs ykxx
 SMTP Server: smtp.gmail.com
 SMTP username: Complete Gmail address
@@ -11,14 +11,14 @@ SMTP TLS/SSL required: yes
 #include <ESP8266WiFi.h>
 #include <ESP_Mail_Client.h>
 
-#define WIFI_SSID "SMVDU."
-#define WIFI_PASSWORD "123456789"
+#define WIFI_SSID "REPLACE_WITH_YOUR_WIFI_SSID"
+#define WIFI_PASSWORD "REPLACE_WITH_YOUR_WIFI_PASSWORD"
 #define SMTP_HOST "smtp.gmail.com"
 #define SMTP_PORT esp_mail_smtp_port_587
 
 /* The log in credentials */
-#define AUTHOR_EMAIL "esp.snahal@gmail.com"
-#define AUTHOR_PASSWORD "vtfuukhtfbjsykxx"
+#define AUTHOR_EMAIL "REPLACE_WITH_YOUR_GMAIL_ADDRESS"
+#define AUTHOR_PASSWORD "REPLACE_WITH_YOUR_GMAIL_APP_PASSWORD"
 
 /* Recipient email address */
 // #define RECIPIENT_EMAIL "snahal135@gmail.com"
